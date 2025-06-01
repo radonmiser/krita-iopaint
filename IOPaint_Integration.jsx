@@ -29,16 +29,28 @@ var submitToIOPaintButton = null;
 
 // --- Main Function ---
 function main() {
-    if (!app.documents.length) {
-        alert("No document open. Please open an image first.");
+    // New initial check for 'app' object and Photoshop context
+    if (typeof app === "undefined" || app.name !== "Adobe Photoshop") {
+        alert("Error: Script is not running in Adobe Photoshop or 'app' is undefined. Please run from Photoshop's File > Scripts menu.");
+        return;
+    }
+
+    // Existing document check, now wrapped in try-catch
+    try {
+        if (!app.documents.length) {
+            alert("No document open. Please open an image first.");
+            return;
+        }
+    } catch (e) {
+        alert("Error accessing app.documents: " + e + "\nThis can happen if the script is not run from within Photoshop or if there's an issue with the application object.");
         return;
     }
 
     // UI Implementation will go here (Step 2)
-    createUI();
+    createUI(); // This line should already exist
 
     // Populate dropdown (Step 3)
-    populateLayersDropdown();
+    populateLayersDropdown(); // This line should already exist
 }
 
 // --- UI Creation (Step 2) ---
